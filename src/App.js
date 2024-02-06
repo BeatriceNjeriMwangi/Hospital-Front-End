@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Appointments from './components/Apointment';
 import Login from './components/Login'
 import Doctor from './components/Doctor';
+import Patient from './components/Patient';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route exact path='/' element={<Home/>}/>
             <Route exact path='/appointment' element={<Appointments/>}/>
             <Route exact path='/doctors' element={<Doctor/>}/>
+            
 
           
         </Routes> }
