@@ -7,6 +7,8 @@ import Appointments from './components/Apointment';
 import Login from './components/Login'
 import Doctor from './components/Doctor';
 import Patient from './components/Patient';
+import Treatment from './components/Treatment';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
             <Route exact path='/appointment' element={<Appointments/>}/>
             <Route exact path='/doctors' element={<Doctor/>}/>
             <Route exact path='/patients' element={<Patient/>}/>
+            <Route exact path='/treatment' element={<Treatment/>}/>
 
           
         </Routes> }

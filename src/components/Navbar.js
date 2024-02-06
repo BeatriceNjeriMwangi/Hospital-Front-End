@@ -12,8 +12,6 @@ function Navbar() {
   return (
     <div className='header'>
 
-        
-        
         <div className="navigation">
             <Link to='/login'>Login</Link>
             <Link to='/'>Home</Link>

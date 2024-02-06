@@ -68,7 +68,7 @@ function FormPatient() {
     border: '1px solid #ccc',
     borderRadius: '4px',
     fontSize: '16px',
-    width: '20rem',
+    width: '30rem',
   };
 
   const buttonStyle = {
