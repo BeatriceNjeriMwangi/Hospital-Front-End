@@ -21,8 +21,7 @@ function Navbar() {
             <Link to='/patients'>Patients</Link>
             <Link to='/appointment'>Appointments</Link>
             <Link to='/treatment'>Treatment</Link>
-            <Link>Diseases</Link>
-            <Link>Progress</Link>
+            
         </div>
     </div>
   )
