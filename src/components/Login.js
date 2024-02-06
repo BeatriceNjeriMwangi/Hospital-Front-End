@@ -23,9 +23,9 @@ function Login() {
     const { fullname, email, password } = input;
 
     if (fullname.trim() !== '' && email.trim() !== '' && password.trim() !== '') {
-      // If all fields are filled, navigate to the dashboard
-      navigate('/Home');
-      alert(`Thanks  ${input.fullname} for joining us`)
+      // If all fields are filled, navigate to the home page
+      navigate('/'); // Redirect to the home page
+      alert(`Thanks  ${input.fullname} for joining us`);
     } else {
       // If any field is empty, show an alert
       alert('Please enter all fields');
@@ -33,52 +33,49 @@ function Login() {
   }
 
   return (
-<div className="form-container">
-    <form onSubmit={handleSubmit}>
-    <div className="form-group">
-      <label>
-        Username
-        <input
-          type="text"
-          name="fullname"
-          placeholder="Enter a valid username"
-          value={input.fullname}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      </div>
-      <div className="form-group">
-      <label
-      
-      >
-        Email
-        <input
-          type="email"
-          name="email"
-          placeholder="Input your email"
-          value={input.email}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      </div>
-      <div className="form-group">
-      <label>
-        Password
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter a valid password"
-          value={input.password}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      </div> 
-      <button type="submit">Login</button>
-    </form>
-
+    <div className="form-container">
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>
+            Username
+            <input
+              type="text"
+              name="fullname"
+              placeholder="Enter a valid username"
+              value={input.fullname}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+        </div>
+        <div className="form-group">
+          <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              placeholder="Input your email"
+              value={input.email}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+        </div>
+        <div className="form-group">
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter a valid password"
+              value={input.password}
+              onChange={handleChange}
+            />
+          </label>
+          <br />
+        </div>
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
