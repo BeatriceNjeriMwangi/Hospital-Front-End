@@ -35,7 +35,7 @@ class Patient(db.Model,SerializerMixin):
     email=db.Column(db.String)
     medical_history=db.Column(db.String)
     address=db.Column(db.String)
-    phone=db.Column(db.String)
+    phone=db.Column(db.Integer)
 
     appointment=db.relationship("Appointment",backref="patients")
     treatment=db.relationship("Treatment",backref="patients")
