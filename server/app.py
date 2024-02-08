@@ -53,22 +53,75 @@ class DoctorById(Resource):
             return {"message":"email updated successfully"},200
         
 
-        # record =Doctor.query.filter_by(id=id).first()
-        # for word in request.json:
-        #     setword(record, word,request.json[word])
-
-        # db.session.add(record)
-        # db.session.commit()
-        # response_dict={"message":"successfully updated"}
-        # return make_response(jsonify(response_dict),200)
-
+        
     
 class Patients(Resource):
     def get (self):
         patient=[{"id":patient.id, "name":patient.name,"gender":patient.gender,"email":patient.email,"medicalhistory":patient.medical_history} for patient in Patient.query.all()]
         return make_response(jsonify(patient),200)
+    def post(self):
+        data=request.json
+        if not data:
+            return{"message": "does not exist"}
+        name=data.get('name')
+        gender=data.get('gender')
+        email=data.get('email')
+        medical_history=data.get('medical_history')
+        address=data.get('address')
+        phone=data.get('phone')
+
+        patient=Patient(name=name, gender=gender, email=email,medical_history=medical_history, address=address, phone=phone)
+        db.session.add(patient)
+        db.session.commit()
+        return {"message":"patient created successfully"}
+    
+class PatientById(Resource):
+    def patch(self,id):
+        data=request.json
+        new_phone=data.get('phone')
+        if new_phone !=  '':
+            patient=Patient.query.filter_by(id=id).first()
+            patient.phone=new_phone
+            db.session.add(patient)
+            db.session.commit()
+            return {"message":"patient updated successfully"}
+        
+class Appointments(Resource):
+    def get(self):
+        appointment=[{"id":appointment.id, "name":appointment.name}for appointment in Appointment.query.all()]
+        return  make_response(jsonify(appointment),200)
+    def post(self):
+        data = request.json
+        if not data:
+            return{"message": "does not exist"}
+        name=data.get('name')
+        patient_id=data.get('patient_id')
+        doctor_id=data.get('doctor_id')
+        appointment = Appointment(name=name,patient_id=patient_id,doctor_id=doctor_id)
+        db.session.add(appointment)
+        db.session.commit()
+        return {"message": "appointment created"} 
+class Treatments(Resource):
+    def get(self):
+        treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"diagnosis":treatment.diagnosis,"prescription":treatment.prescription}for treatment in Treatment.query.all()]
+        return make_response(jsonify(treatment),200)
+    
+class TreatmentById(Resource):
+    def delete(self,id):
+        treatment=Treatment.query.filter_by(id=id).first()
+        db.session.delete(treatment)
+        db.session.commit()
+        response_dict={'message':'treatment deleted successfully'}
+
+        return make_response(jsonify(response_dict),200)
+        
+
 api.add_resource(Doctors,'/doctors')
 api.add_resource(Patients,'/patients')
 api.add_resource(DoctorById,'/doctors/<int:id>')
+api.add_resource(PatientById,'/patients/<int:id>')
+api.add_resource(Appointments,'/appointments')
+api.add_resource(Treatments,'/treatments')
+api.add_resource(TreatmentById,'/treatments/<int:id>')
 if __name__ == '__main__':
     app.run(port=5555,debug=True)

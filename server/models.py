@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
-
+from sqlalchemy.orm import validates
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
 })
@@ -21,6 +21,12 @@ class Doctor(db.Model,SerializerMixin):
     appointment=db.relationship("Appointment",backref="doctors")
     treatment=db.relationship("Treatment",backref="doctors")
 
+    @validates('email')
+    def validates_email(self,key,email):
+        if '@' not in email:
+            raise ValueError("email must have an '@")
+        return email
+
 class Patient(db.Model,SerializerMixin):
     __tablename__ = 'patients'
     id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +40,11 @@ class Patient(db.Model,SerializerMixin):
     appointment=db.relationship("Appointment",backref="patients")
     treatment=db.relationship("Treatment",backref="patients")
 
-
+    @validates('gender')
+    def validates_gender(self,key,gender):
+        if not gender:
+            raise ValueError('patient must specify the gender ')
+        return gender
 class Appointment(db.Model,SerializerMixin):
     __tablename__ = 'appointments'
     id = db.Column(db.Integer, primary_key=True)
