@@ -121,11 +121,6 @@ table {
 }
 
 .form-container {
-<<<<<<< HEAD:src/App.css
-  
-=======
-
->>>>>>> d9aaf6c60ac4f4298ad5b4fc056262e1679e46ef:client/src/App.css
   display:block;
   flex-direction:column;
   align-items: center;

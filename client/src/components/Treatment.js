@@ -1,7 +1,3 @@
-<<<<<<< HEAD:src/components/Treatment.js
-
-=======
->>>>>>> d9aaf6c60ac4f4298ad5b4fc056262e1679e46ef:client/src/components/Treatment.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormTreatment from '../components/FormTreatment';
