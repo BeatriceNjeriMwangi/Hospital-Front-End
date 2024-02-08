@@ -76,6 +76,19 @@ class Patients(Resource):
         return {"message":"patient created successfully"}
     
 class PatientById(Resource):
+    def get(self, id):
+        patient = Patient.query.filter_by(id=id).first()
+        if patient:
+            patient_data = {
+                "id": patient.id,
+                "name": patient.name,
+                "gender": patient.gender,
+                "email": patient.email,
+                "medical_history": patient.medical_history
+            }
+            return make_response(jsonify(patient_data), 200)
+        else:
+            return make_response(jsonify({"message": "Patient not found"}), 404)
     def patch(self,id):
         data=request.json
         new_phone=data.get('phone')
@@ -105,8 +118,38 @@ class Treatments(Resource):
     def get(self):
         treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"diagnosis":treatment.diagnosis,"prescription":treatment.prescription}for treatment in Treatment.query.all()]
         return make_response(jsonify(treatment),200)
+    def post(self):
+        data = request.json
+        if not data:
+            return{"message": "does not exist"}
+        appointment_id=data.get('appointment_id')
+        doctors_id=data.get('doctors_id')
+        patients_id=data.get('patients_id')
+        diagnosis=data.get('diagnosis')
+        prescription=data.get('prescription')
+        
+        treatment = Treatment(appointment_id=appointment_id,doctors_id=doctors_id,patients_id=patients_id,diagnosis=diagnosis,prescription=prescription)
+        db.session.add(treatment)
+        db.session.commit()
+        return {"message": "appointment created"} 
     
 class TreatmentById(Resource):
+    def get(self,id):
+        treatment = Treatment.query.filter_by(id=id).first()
+        if treatment:
+            treatment_data = {
+                "id": treatment.id,
+                "appointment_id": treatment.appointment_id,
+                "doctors_id": treatment.doctors_id,
+                "patients_id": treatment.patients_id,
+                "diagnosis": treatment.diagnosis,
+                "prescription": treatment.prescription
+
+            }
+            return make_response(jsonify(treatment_data), 200)
+        else:
+            return make_response(jsonify({"message": "Treatment not found"}), 404)
+
     def delete(self,id):
         treatment=Treatment.query.filter_by(id=id).first()
         db.session.delete(treatment)
