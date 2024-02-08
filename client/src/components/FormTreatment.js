@@ -21,19 +21,19 @@ function FormTreatment() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.patch('http://127.0.0.1:5555/update_treatment_progress', formData);
+try {
+  const response = await axios.patch('http://127.0.0.1:5555/update_treatment_progress', formData);
 
-      if (response.status === 200) {
-        setMessage('Treatment progress updated successfully');
-      } else if (response.status === 404) {
-        setMessage(response.data.message);
-      } else {
-        setMessage('An error occurred while updating treatment progress');
-      }
-    } catch (error) {
-      setMessage('An error occurred while updating treatment progress');
-    }
+  if (response.status === 200) {
+    setMessage('Treatment progress updated successfully');
+  } else if (response.status === 404) {
+    setMessage(response.data.message);
+  } else {
+    setMessage('An error occurred while updating treatment progress');
+  }
+} catch (error) {
+  setMessage('An error occurred while updating treatment progress');
+}
   };
 
   return (

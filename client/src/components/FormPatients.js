@@ -23,29 +23,29 @@ function FormPatient() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post('http://127.0.0.1:5555/create_patient', formData);
+try {
+  const response = await axios.post('http://127.0.0.1:5555/create_patient', formData);
 
-      if (response.status === 201) {
-        setMessage('Patient created successfully');
-        // Clear the form
-        setFormData({
-          fname: '',
-          lname: '',
-          password: '',
-          email: '',
-          phone_number: '',
-          regNo: '',
-          gender: '',
-        });
-      }
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data.error);
-      } else {
-        setError('An error occurred while creating the patient.');
-      }
-    }
+  if (response.status === 201) {
+    setMessage('Patient created successfully');
+    // Clear the form
+    setFormData({
+      fname: '',
+      lname: '',
+      password: '',
+      email: '',
+      phone_number: '',
+      regNo: '',
+      gender: '',
+    });
+  }
+} catch (err) {
+  if (err.response) {
+    setError(err.response.data.error);
+  } else {
+    setError('An error occurred while creating the patient.');
+  }
+}
   };
 
   const formStyle = {
@@ -68,7 +68,7 @@ function FormPatient() {
     border: '1px solid #ccc',
     borderRadius: '4px',
     fontSize: '16px',
-    width: '30rem',
+    width: '20rem',
   };
 
   const buttonStyle = {
@@ -176,3 +176,4 @@ function FormPatient() {
 }
 
 export default FormPatient;
+

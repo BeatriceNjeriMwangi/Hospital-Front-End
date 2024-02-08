@@ -11,29 +11,29 @@ function FormUpdate() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.patch(`http://127.0.0.1:5555/update_appointment/${id}`, {
-        appointment_date: appointmentDate,
-      });
+try {
+  const response = await axios.patch(`http://127.0.0.1:5555/update_appointment/${id}`, {
+    appointment_date: appointmentDate,
+  });
 
-      if (response.status === 200) {
-        // Display a SweetAlert success notification
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Appointment date updated successfully',
-        }).then(() => {
-          // Reload the page after closing the SweetAlert dialog
-          window.location.reload();
-        });
-      }
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data.error);
-      } else {
-        setError('An error occurred while updating the appointment date.');
-      }
-    }
+  if (response.status === 200) {
+    // Display a SweetAlert success notification
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Appointment date updated successfully',
+    }).then(() => {
+      // Reload the page after closing the SweetAlert dialog
+      window.location.reload();
+    });
+  }
+} catch (err) {
+  if (err.response) {
+    setError(err.response.data.error);
+  } else {
+    setError('An error occurred while updating the appointment date.');
+  }
+}
   };
 
   return (

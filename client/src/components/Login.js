@@ -20,16 +20,16 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const { fullname, email, password } = input;
+const { fullname, email, password } = input;
 
-    if (fullname.trim() !== '' && email.trim() !== '' && password.trim() !== '') {
-      // If all fields are filled, navigate to the home page
-      navigate('/'); // Redirect to the home page
-      alert(`Thanks  ${input.fullname} for joining us`);
-    } else {
-      // If any field is empty, show an alert
-      alert('Please enter all fields');
-    }
+if (fullname.trim() !== '' && email.trim() !== '' && password.trim() !== '') {
+  // If all fields are filled, navigate to the home page
+  navigate('/'); // Redirect to the home page
+  alert(`Thanks  ${input.fullname} for joining us`);
+} else {
+  // If any field is empty, show an alert
+  alert('Please enter all fields');
+}
   }
 
   return (

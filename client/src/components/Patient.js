@@ -49,8 +49,8 @@ function Patient() {
         </tbody>
       </table>
 
-      <FormPatient/>
-    </div>
+  <FormPatient/>
+</div>
   );
 }
 

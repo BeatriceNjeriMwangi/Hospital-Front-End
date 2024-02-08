@@ -12,16 +12,18 @@ function Navbar() {
   return (
     <div className='header'>
 
-        <div className="navigation">
-            <Link to='/login'>Login</Link>
-            <Link to='/'>Home</Link>
-            <Link to='/doctors'>Doctors</Link>
-            <Link to='/patients'>Patients</Link>
-            <Link to='/appointment'>Appointments</Link>
-            <Link to='/treatment'>Treatment</Link>
-            
-        </div>
+    
+    
+    <div className="navigation">
+        <Link to='/login'>Login</Link>
+        <Link to='/'>Home</Link>
+        <Link to='/doctors'>Doctors</Link>
+        <Link to='/patients'>Patients</Link>
+        <Link to='/appointment'>Appointments</Link>
+        <Link to='/treatment'>Treatment</Link>
+        
     </div>
+</div>
   )
 }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 function Home() {
   return (
     <div className='home'>
@@ -10,11 +9,12 @@ function Home() {
             to our community for over five decades. Founded in 1960, our hospital has grown into a trusted healthcare
             destination, known for its commitment to patient-centered care and cutting-edge medical technology.</p>
 
-        <button className="btn">Login
+    <button className="btn">Login
 
-        
-        </button>
-    </div>
+    
+    </button>
+</div>
   )
 }
+
 export default Home;

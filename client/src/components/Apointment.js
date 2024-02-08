@@ -41,8 +41,8 @@ function AppointmentList() {
         </tbody>
       </table>
 
-      <FormUpdate/>
-    </div>
+  <FormUpdate/>
+</div>
   );
 }
 
