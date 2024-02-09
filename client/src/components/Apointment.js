@@ -6,7 +6,7 @@ function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5555/appointments')
+    axios.get('/appointments')
       .then((response) => {
         setAppointments(response.data);
       })

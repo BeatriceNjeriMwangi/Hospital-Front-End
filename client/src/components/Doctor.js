@@ -5,9 +5,9 @@ import FormDoctor from '../components/FormDoctor';
 function Doctor() {
   const [doctors, setDoctors] = useState([]);
 
-  const fetchPatients = async () => {
+  const fetchDoctors = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5555/doctor');
+      const response = await axios.get('/doctors');
       setDoctors(response.data.doctors);
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -15,7 +15,7 @@ function Doctor() {
   };
 
   useEffect(() => {
-    fetchPatients();
+    fetchDoctors();
   }, []);
 
   return (
@@ -26,24 +26,20 @@ function Doctor() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+             <th>Name</th>
             <th>Email</th>
-            <th>Phone Number</th>
-            <th>Registration Number</th>
-            <th>Gender</th>
+            <th>DepartmentID</th>
+            <th>schedule</th>
           </tr>
         </thead>
         <tbody>
           {doctors.map((doctor) => (
             <tr key={doctor.id}>
               <td>{doctor.id}</td>
-              <td>{doctor.fname}</td>
-              <td>{doctor.lname}</td>
+              <td>{doctor.name}</td>
               <td>{doctor.email}</td>
-              <td>{doctor.phone_number}</td>
-              <td>{doctor.regNo}</td>
-              <td>{doctor.gender}</td>
+              <td>{doctor.departmentid}</td>
+              <td>{doctor.schedule}</td>
             </tr>
           ))}
         </tbody>

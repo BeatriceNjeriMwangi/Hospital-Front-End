@@ -7,7 +7,7 @@ function Treatment() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:5555/get_treatments')
+    axios.get('/treatments')
       .then((response) => {
         setTreatments(response.data.treatments);
       })

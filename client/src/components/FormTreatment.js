@@ -22,7 +22,7 @@ function FormTreatment() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch('http://127.0.0.1:5555/update_treatment_progress', formData);
+  const response = await axios.patch('/treatments', formData);
 
   if (response.status === 200) {
     setMessage('Treatment progress updated successfully');
