@@ -12,10 +12,13 @@ db=SQLAlchemy(metadata=metadata)
 class Doctor(db.Model,SerializerMixin):
     __tablename__ = 'doctors'
     id=db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String)
+    fname=db.Column(db.String)
+    lname=db.Column(db.String)
     email=db.Column(db.String)
-    departmentID=db.Column(db.Integer)
-    schedule=db.Column(db.String)
+    password=db.Column(db.Integer)
+    phone_number=db.Column(db.Integer)
+    regNo=db.Column(db.Integer)
+    gender=db.Column(db.String)
 
     patient=db.relationship("Patient",secondary="appointments",backref="doctors",viewonly=True)
     appointment=db.relationship("Appointment",backref="doctors")
@@ -30,12 +33,15 @@ class Doctor(db.Model,SerializerMixin):
 class Patient(db.Model,SerializerMixin):
     __tablename__ = 'patients'
     id = db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String)
-    gender=db.Column(db.String)
+    fname=db.Column(db.String)
+    lname=db.Column(db.String)
+    password=db.Column(db.Integer)
     email=db.Column(db.String)
-    medical_history=db.Column(db.String)
-    address=db.Column(db.String)
-    phone=db.Column(db.Integer)
+    phone_number=db.Column(db.Integer)
+    regNo=db.Column(db.Integer)
+    gender=db.Column(db.String)
+   
+   
 
     appointment=db.relationship("Appointment",backref="patients")
     treatment=db.relationship("Treatment",backref="patients")
@@ -48,9 +54,10 @@ class Patient(db.Model,SerializerMixin):
 class Appointment(db.Model,SerializerMixin):
     __tablename__ = 'appointments'
     id = db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.String)
     patients_id = db.Column(db.Integer, db.ForeignKey("patients.id"))
     doctors_id = db.Column(db.Integer, db.ForeignKey("doctors.id"))
+    appointment_date=db.Column(db.DateTime)
+    appointment_time=db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.utcnow)
 
@@ -63,5 +70,5 @@ class Treatment(db.Model,SerializerMixin):
     appointment_id = db.Column(db.Integer ,db.ForeignKey("appointments.id"))
     doctors_id = db.Column(db.Integer,db.ForeignKey("doctors.id"))
     patients_id=db.Column(db.Integer, db.ForeignKey("patients.id"))
-    diagnosis = db.Column(db.String)
-    prescription=db.Column(db.String)
+    progress = db.Column(db.String)
+  
