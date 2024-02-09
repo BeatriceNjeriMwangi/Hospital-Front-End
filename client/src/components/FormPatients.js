@@ -24,7 +24,7 @@ function FormPatient() {
     e.preventDefault();
 
 try {
-  const response = await axios.post('http://127.0.0.1:5555/create_patient', formData);
+  const response = await axios.post('/patients', formData);
 
   if (response.status === 201) {
     setMessage('Patient created successfully');

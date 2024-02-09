@@ -1,7 +1,7 @@
 from models import db, Doctor, Patient, Appointment, Treatment
 from app import app
 
-def seed_data():
+def seed_data(appointment_date, appointment_time):
     db.session.query(Doctor).delete()
     db.session.query(Patient).delete()
     db.session.query(Appointment).delete()
@@ -35,8 +35,6 @@ def seed_data():
     db.session.add(patient5)
     db.session.commit()  # Commit patients first to obtain their IDs
     
-    appointment_date = input("Enter appointment date (YYYY-MM-DD): ")
-    appointment_time = input("Enter appointment time (HH:MM:SS): ")
     # Create appointments
 
     appointment1 = Appointment( patients_id=patient1.id, doctors_id=doctor1.id,appointment_date=appointment_date,appointment_time=appointment_time)
@@ -63,8 +61,9 @@ def seed_data():
     
     # Commit the changes
     db.session.commit()
-    
 
 if __name__ == '__main__':
     with app.app_context():
-        seed_data()
+        appointment_date = datetime.strptime("2024-02-09", "%Y-%m-%d")
+        appointment_time = datetime.strptime("10:30:00", "%H:%M:%S")
+        seed_data(appointment_date, appointment_time)

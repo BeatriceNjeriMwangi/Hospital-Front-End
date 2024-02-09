@@ -12,7 +12,7 @@ function FormUpdate() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch(`http://127.0.0.1:5555/update_appointment/${id}`, {
+  const response = await axios.patch(`/appointments/${id}`, {
     appointment_date: appointmentDate,
   });
 

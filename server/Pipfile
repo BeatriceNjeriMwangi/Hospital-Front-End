@@ -10,8 +10,12 @@ flask-migrate = "*"
 faker = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
+<<<<<<< HEAD
 flask-cors = "*"
 importlib-metadata = "*"
+=======
+importlib-resources = "*"
+>>>>>>> origin/main
 
 [dev-packages]
 
