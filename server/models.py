@@ -56,8 +56,8 @@ class Appointment(db.Model,SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     patients_id = db.Column(db.Integer, db.ForeignKey("patients.id"))
     doctors_id = db.Column(db.Integer, db.ForeignKey("doctors.id"))
-    appointment_date=db.Column(db.DateTime)
-    appointment_time=db.Column(db.DateTime)
+    appointment_date=db.Column(db.Date)
+    appointment_time=db.Column(db.Time)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.utcnow)
 
