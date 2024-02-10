@@ -13,22 +13,25 @@ api=Api(app)
 #get list of all doctors
 class Doctors(Resource):
     def get (self):
-        doctor =[{"id":doctor.id, "name":doctor.name,"email":doctor.email,"departmentID":doctor.departmentID,"Schedule":doctor.schedule} for doctor in Doctor.query.all()]
+        doctor =[{"id":doctor.id, "fname":doctor.fname,"lname":doctor.lname,"email":doctor.email,"password":doctor.password,"phone_number":doctor.phone_number,"regNo":doctor.regNo,"gender":doctor.gender} for doctor in Doctor.query.all()]
         return make_response(jsonify(doctor),200)
     def post(self):
         data = request.json
         if not data:
             return {"message": "Request body must be in JSON format"}, 400
 
-        name = data.get('name')
+        fname = data.get('fname')
+        lname = data.get('lname')
         email = data.get('email')
-        departmentID = data.get('departmentID')
-        schedule = data.get('schedule')
+        password = data.get('password')
+        phone_number = data.get('phone_number')
+        regNo=data.get('regNo')
+        gender=data.get('gender')
 
-        if not all([name, email, departmentID, schedule]):
-            return {"message": "Please provide name, email, departmentID, and schedule"}, 400
+        if not all([fname,lname, email, password, phone_number,regNo,gender]):
+            return {"message": "Please provide all fields"}, 400
 
-        doctor = Doctor(name=name, email=email, departmentID=departmentID, schedule=schedule)
+        doctor = Doctor(fname=fname,lname=lname, email=email, password=password, phone_number=phone_number,regNo=regNo,gender=gender)
         db.session.add(doctor)
         db.session.commit()
 
@@ -57,20 +60,21 @@ class DoctorById(Resource):
     
 class Patients(Resource):
     def get (self):
-        patient=[{"id":patient.id, "name":patient.name,"gender":patient.gender,"email":patient.email,"medicalhistory":patient.medical_history} for patient in Patient.query.all()]
+        patient=[{"id":patient.id, "fname":patient.fname, "lname":patient.lname,"password":patient.password,"email":patient.email,"phone_number":patient.phone_number,"regNo":patient.regNo,"gender":patient.gender} for patient in Patient.query.all()]
         return make_response(jsonify(patient),200)
     def post(self):
         data=request.json
         if not data:
             return{"message": "does not exist"}
-        name=data.get('name')
-        gender=data.get('gender')
+        fname=data.get('fname')
+        lname=data.get('lname')
+        password=data.get('password')
         email=data.get('email')
-        medical_history=data.get('medical_history')
-        address=data.get('address')
-        phone=data.get('phone')
+        phone_number=data.get('phone_number')
+        regNo=data.get('regNo')
+        gender=data.get('gender')
 
-        patient=Patient(name=name, gender=gender, email=email,medical_history=medical_history, address=address, phone=phone)
+        patient=Patient(fname=fname,lname=lname, password=password, email=email,phone_number=phone_number, regNo=regNo, gender=gender)
         db.session.add(patient)
         db.session.commit()
         return {"message":"patient created successfully"}
@@ -81,10 +85,13 @@ class PatientById(Resource):
         if patient:
             patient_data = {
                 "id": patient.id,
-                "name": patient.name,
-                "gender": patient.gender,
+                "fname": patient.fname,
+                "lname": patient.lname,
+                "password":patient.password,
                 "email": patient.email,
-                "medical_history": patient.medical_history
+                "phone_number": patient.phone_number,
+                "regNo":patient.regNo,
+                "gender": patient.gender
             }
             return make_response(jsonify(patient_data), 200)
         else:
@@ -107,16 +114,17 @@ class Appointments(Resource):
         data = request.json
         if not data:
             return{"message": "does not exist"}
-        name=data.get('name')
-        patient_id=data.get('patient_id')
-        doctor_id=data.get('doctor_id')
-        appointment = Appointment(name=name,patient_id=patient_id,doctor_id=doctor_id)
+        patients_id=data.get('patients_id')
+        doctors_id=data.get('doctors_id')
+        appointment_date=data.get('appointment_date')
+        appointment_time=data.get('appointment_time')
+        appointment = Appointment(patient_id=patients_id,doctor_id=doctors_id,appointment_date=appointment_date,appointment_time=appointment_time)
         db.session.add(appointment)
         db.session.commit()
         return {"message": "appointment created"} 
 class Treatments(Resource):
     def get(self):
-        treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"diagnosis":treatment.diagnosis,"prescription":treatment.prescription}for treatment in Treatment.query.all()]
+        treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"progress":treatment.progress}for treatment in Treatment.query.all()]
         return make_response(jsonify(treatment),200)
     def post(self):
         data = request.json
@@ -125,10 +133,9 @@ class Treatments(Resource):
         appointment_id=data.get('appointment_id')
         doctors_id=data.get('doctors_id')
         patients_id=data.get('patients_id')
-        diagnosis=data.get('diagnosis')
-        prescription=data.get('prescription')
+        progress=data.get('progress')
         
-        treatment = Treatment(appointment_id=appointment_id,doctors_id=doctors_id,patients_id=patients_id,diagnosis=diagnosis,prescription=prescription)
+        treatment = Treatment(appointment_id=appointment_id,doctors_id=doctors_id,patients_id=patients_id,progress=progress)
         db.session.add(treatment)
         db.session.commit()
         return {"message": "appointment created"} 
@@ -142,8 +149,7 @@ class TreatmentById(Resource):
                 "appointment_id": treatment.appointment_id,
                 "doctors_id": treatment.doctors_id,
                 "patients_id": treatment.patients_id,
-                "diagnosis": treatment.diagnosis,
-                "prescription": treatment.prescription
+                "progress": treatment.progress,
 
             }
             return make_response(jsonify(treatment_data), 200)
