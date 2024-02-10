@@ -149,7 +149,11 @@ class TreatmentById(Resource):
                 "appointment_id": treatment.appointment_id,
                 "doctors_id": treatment.doctors_id,
                 "patients_id": treatment.patients_id,
+<<<<<<< HEAD
                 "progress": treatment.progress,
+=======
+                "progress": treatment.progress
+>>>>>>> da9ef894 (edited some components)
 
             }
             return make_response(jsonify(treatment_data), 200)

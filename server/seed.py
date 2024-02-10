@@ -1,5 +1,6 @@
 from models import db, Doctor, Patient, Appointment, Treatment
 from app import app
+from datetime import datetime
 
 def seed_data(appointment_date, appointment_time):
     db.session.query(Doctor).delete()

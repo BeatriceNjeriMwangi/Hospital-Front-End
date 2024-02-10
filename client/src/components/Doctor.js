@@ -5,7 +5,7 @@ import FormDoctor from '../components/FormDoctor';
 function Doctor() {
   const [doctors, setDoctors] = useState([]);
 
-  const fetchPatients = async () => {
+  const fetchDoctors = async () => {
     try {
       const response = await axios.get('/doctors');
       setDoctors(response.data.doctors);
@@ -15,7 +15,7 @@ function Doctor() {
   };
 
   useEffect(() => {
-    fetchPatients();
+    fetchDoctors();
   }, []);
 
   return (
@@ -39,7 +39,6 @@ function Doctor() {
             <tr key={doctor.id}>
               <td>{doctor.id}</td>
               <td>{doctor.fname}</td>
-              <td>{doctor.lname}</td>
               <td>{doctor.email}</td>
               <td>{doctor.phone_number}</td>
               <td>{doctor.regNo}</td>
