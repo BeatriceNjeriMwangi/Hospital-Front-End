@@ -82,18 +82,6 @@ function FormDoctor() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lname">Last Name:</label>
-          <input
-            type="text"
-            id="lname"
-            name="lname"
-            value={formData.lname}
-            onChange={handleChange}
-            required
-            style={inputStyle}
-          />
-        </div>
-        <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
             type="password"

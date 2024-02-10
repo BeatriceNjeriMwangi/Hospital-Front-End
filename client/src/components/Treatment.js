@@ -26,8 +26,6 @@ function Treatment() {
             <th>ID</th>
             <th>Patient RegNo</th>
             <th>Doctor RegNo</th>
-            <th>Disease ID</th>
-            <th>Hospital ID</th>
           </tr>
         </thead>
         <tbody>

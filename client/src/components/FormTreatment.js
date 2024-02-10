@@ -3,8 +3,9 @@ import axios from 'axios'; // Import Axios
 
 function FormTreatment() {
   const [formData, setFormData] = useState({
-    patient_regNo: '',
-    doctor_regNo: '',
+    appointment_id: '',
+    doctor_id: '',
+    patient_id: '',
     progress: '',
   });
 
@@ -41,24 +42,24 @@ try {
       <h2 style={{ textAlign: 'center' }}>Update Treatment Progress</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="patient_regNo">Patient Registration Number:</label>
+          <label htmlFor="doctor_id">Doctor ID:</label>
           <input
-            type="text"
-            id="patient_regNo"
-            name="patient_regNo"
-            value={formData.patient_regNo}
+            type="tel"
+            id="doctor_id"
+            name="doctor_id"
+            value={formData.doctor_id}
             onChange={handleInputChange}
             required
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="doctor_regNo">Doctor Registration Number:</label>
+          <label htmlFor="patient_id">Doctor Registration Number</label>
           <input
-            type="text"
-            id="doctor_regNo"
-            name="doctor_regNo"
-            value={formData.doctor_regNo}
+            type="tel"
+            id="patient_id"
+            name="patient_id"
+            value={formData.patient_id}
             onChange={handleInputChange}
             required
             style={{ width: '100%', padding: '5px' }}
