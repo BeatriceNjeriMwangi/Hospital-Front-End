@@ -31,7 +31,7 @@ function Treatment() {
           </tr>
         </thead>
         <tbody>
-          {treatments.map((treatment) => (
+          {treatments?.map((treatment) => (
             <tr key={treatment.id}>
               <td>{treatment.id}</td>
               <td>{treatment.patient_regNo}</td>

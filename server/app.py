@@ -155,7 +155,15 @@ class TreatmentById(Resource):
             return make_response(jsonify(treatment_data), 200)
         else:
             return make_response(jsonify({"message": "Treatment not found"}), 404)
-
+    def patch(self,id):
+        data=request.json
+        new_progress=data.get('new_progress')
+        if new_progress !=  '':
+            treatment=Treatment.query.filter_by(id=id).first()
+            treatment.progress=new_progress
+            db.session.add(treatment)
+            db.session.commit()
+            return {"message":"treatment updated successfully"}
     def delete(self,id):
         treatment=Treatment.query.filter_by(id=id).first()
         db.session.delete(treatment)
