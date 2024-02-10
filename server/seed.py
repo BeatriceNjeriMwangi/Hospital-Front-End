@@ -64,6 +64,5 @@ def seed_data(appointment_date, appointment_time):
 
 if __name__ == '__main__':
     with app.app_context():
-        appointment_date = datetime.strptime("2024-02-09", "%Y-%m-%d")
-        appointment_time = datetime.strptime("10:30:00", "%H:%M:%S")
-        seed_data(appointment_date, appointment_time)
+        
+        seed_data()
