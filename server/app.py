@@ -107,7 +107,7 @@ class PatientById(Resource):
 
 class Appointments(Resource):
     def get(self):
-        appointment=[{"id":appointment.id,"patients_id":appointment.patients_id,"doctors_id":appointment.doctors_id,"appointment_date":str(appointment.appointment_date),"appointment_time":str(appointment.appointment_time)}for appointment in Appointment.query.all()]
+        appointment=[{"id":appointment.id}for appointment in Appointment.query.all()]
         return  make_response(jsonify(appointment),200)
     def post(self):
         data = request.json

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import FormUpdate from '../components/FormUpdate';
 import FormAppointment from './FormAppointment';
 
@@ -7,13 +6,9 @@ function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    axios.get('/appointments')
-      .then((response) => {
-        setAppointments(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    fetch( '/doctors')
+    .then(r => r.json())
+    .then(data => setAppointments(data))
   }, []);
 
   return (
