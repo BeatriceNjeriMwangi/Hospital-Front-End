@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import FormTreatment from '../components/FormTreatment';
 
 function Treatment() {
@@ -7,13 +6,9 @@ function Treatment() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get('/treatments')
-      .then((response) => {
-        setTreatments(response.data.treatments);
-      })
-      .catch((err) => {
-        setError('An error occurred while fetching treatments.');
-      });
+    fetch( '/treatments')
+    .then(r => r.json())
+    .then(data => setTreatments(data))
   }, []);
 
   return (
@@ -24,18 +19,22 @@ function Treatment() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Patient RegNo</th>
-            <th>Doctor RegNo</th>
+            <th>Appointment ID</th>
+            <th>Doctors ID</th>
+            <th>Patients ID</th>
+            <th>Progress</th>
+
+
           </tr>
         </thead>
         <tbody>
           {treatments?.map((treatment) => (
             <tr key={treatment.id}>
               <td>{treatment.id}</td>
-              <td>{treatment.patient_regNo}</td>
-              <td>{treatment.doctor_regNo}</td>
-              <td>{treatment.disease_id}</td>
-              <td>{treatment.hospital_id}</td>
+              <td>{treatment.appointment_id}</td>
+              <td>{treatment.doctors_id}</td>
+              <td>{treatment.patients_id}</td>
+              <td>{treatment.progress }</td>
             </tr>
           ))}
         </tbody>

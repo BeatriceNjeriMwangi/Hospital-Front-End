@@ -1,82 +1,84 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import Axios
 
 function FormTreatment() {
-  const [formData, setFormData] = useState({
-    appointment_id: '',
-    doctor_id: '',
-    patient_id: '',
-    progress: '',
-  });
+  const [appointment_id,setAppointmentID ] = useState("")
+  const [doctors_id,setDoctorsID] = useState ("")
+  const [patients_id,setPatientsID] = useState ("")
+  const [progress,setLastProgress] = useState ("")
 
-  const [message, setMessage] = useState('');
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-try {
-  const response = await axios.patch('/treatments', formData);
-
-  if (response.status === 200) {
-    setMessage('Treatment progress updated successfully');
-  } else if (response.status === 404) {
-    setMessage(response.data.message);
-  } else {
-    setMessage('An error occurred while updating treatment progress');
-  }
-} catch (error) {
-  setMessage('An error occurred while updating treatment progress');
-}
+    fetch('/treatments' , {
+      method: 'POST',
+      headers: {
+        "content-Type": "application/json"
+      },
+      body: JSON.stringify( {
+        appointment_id,
+        doctors_id,
+        patients_id,
+        progress,
+      })
+    })
   };
-
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto' }}>
       <h2 style={{ textAlign: 'center' }}>Update Treatment Progress</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="doctor_id">Doctor ID:</label>
+          <label htmlFor="appointment_id">Appointment ID:</label>
           <input
             type="tel"
-            id="doctor_id"
-            name="doctor_id"
-            value={formData.doctor_id}
-            onChange={handleInputChange}
+            id="appointment_id"
+            name="appointment_id"
+            value={appointment_id}
+            onChange={(e) => setAppointmentID(e.target.value)}
             required
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
+
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="patient_id">Doctor Registration Number</label>
+          <label htmlFor="doctors_id">Doctors ID</label>
           <input
             type="tel"
-            id="patient_id"
-            name="patient_id"
-            value={formData.patient_id}
-            onChange={handleInputChange}
+            id="doctors_id"
+            name="doctors_id"
+            value={doctors_id}
+            onChange={(e) => setDoctorsID(e.target.value)}
             required
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
+        
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="progress">New Progress:</label>
+          <label htmlFor="patients_id">Patients ID</label>
           <input
             type="text"
-            id="progress"
-            name="progress"
-            value={formData.progress}
-            onChange={handleInputChange}
+            id="patients_id"
+            name="patients_id"
+            value={patients_id}
+            onChange={(e) => setPatientsID(e.target.value)}
             required
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
+
+        <div style={{ marginBottom: '10px' }}>
+          <label htmlFor="progress">Progress</label>
+          <input
+            type="tel"
+            id="progress"
+            name="progress"
+            value={progress}
+            onChange={(e) => setLastProgress(e.target.value)}
+            required
+            style={{ width: '100%', padding: '5px' }}
+          />
+        </div>
+
         <div>
           <button
             type="submit"
@@ -92,16 +94,7 @@ try {
           </button>
         </div>
       </form>
-      {message && (
-        <p
-          style={{
-            marginTop: '10px',
-            color: message.includes('successfully') ? 'green' : 'red',
-          }}
-        >
-          {message}
-        </p>
-      )}
+    
     </div>
   );
 }

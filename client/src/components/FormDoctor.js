@@ -1,52 +1,53 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { json } from 'react-router-dom';
 
 function FormDoctor() {
-  const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    password: '',
-    email: '',
-    phone_number: '',
-    regNo: '',
-    gender: '',
-  });
+ const [fname,setFirstName ] = useState("")
+ const [lname,setLastName] = useState ("")
+ const [password,setPassword] = useState ("")
+ const [email,setLastEmail] = useState ("")
+ const [phone_number,setPhoneNumber] = useState ("")
+ const [regNo,setRegNo] = useState ("")
+ const [gender,setGender] = useState ("")
+
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
-  const handleSubmit = async (e) => {
+
+  function handleSubmit(e) {
     e.preventDefault();
-
-    try {
-      const response = await axios.post('/doctors', formData);
-
-      if (response.status === 201) {
-        setMessage('Doctor created successfully');
-        // Clear the form
-        setFormData({
-          fname: '',
-          lname: '',
-          password: '',
-          email: '',
-          phone_number: '',
-          regNo: '',
-          gender: '',
-        });
-      }
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data.error);
+  
+    fetch('/doctors', {
+      method: 'POST',
+      headers: {    // <-- Corrected field name
+        "Content-Type": "application/json"  // <-- Corrected Content-Type header
+      },
+      body: JSON.stringify({
+        fname,
+        lname,
+        password,
+        email,
+        phone_number,
+        regNo,
+        gender,
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        // Optionally handle success response here
+        console.log("Doctor created successfully");
       } else {
-        setError('An error occurred while creating the doctor.');
+        // Optionally handle error response here
+        console.error("Failed to create doctor");
       }
-    }
+    })
+    .catch(error => {
+      console.error('Error creating doctor:', error);
+    });
   };
+  
 
   const formStyle = {
     maxWidth: '400px',
@@ -67,7 +68,7 @@ function FormDoctor() {
 
   return (
     <div style={formStyle}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Create Doctor</h2>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Doctor's Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="fname">First Name:</label>
@@ -75,8 +76,20 @@ function FormDoctor() {
             type="text"
             id="fname"
             name="fname"
-            value={formData.fname}
-            onChange={handleChange}
+            value={fname}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+            style={inputStyle}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lname"> Last Name:</label>
+          <input
+            type="text"
+            id="lname"
+            name="lname"
+            value={lname}
+            onChange={(e) => setLastName(e.target.value)}
             required
             style={inputStyle}
           />
@@ -87,8 +100,8 @@ function FormDoctor() {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             style={inputStyle}
           />
@@ -99,8 +112,8 @@ function FormDoctor() {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setLastEmail(e.target.value)}
             required
             style={inputStyle}
           />
@@ -111,8 +124,8 @@ function FormDoctor() {
             type="tel"
             id="phone_number"
             name="phone_number"
-            value={formData.phone_number}
-            onChange={handleChange}
+            value={phone_number}
+            onChange={(e) => setPhoneNumber(e.target.value)}
             required
             style={inputStyle}
           />
@@ -123,27 +136,26 @@ function FormDoctor() {
             type="text"
             id="regNo"
             name="regNo"
-            value={formData.regNo}
-            onChange={handleChange}
+            value={regNo}
+            onChange={(e) => setRegNo(e.target.value)}
             required
             style={inputStyle}
           />
         </div>
         <div className="form-group">
           <label htmlFor="gender">Gender:</label>
-          <select
+          <input
+            type="text"
             id="gender"
             name="gender"
-            value={formData.gender}
-            onChange={handleChange}
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
             required
             style={inputStyle}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          </input>
         </div>
-        <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: '#fff', padding: '10px', border: 'none', borderRadius: '3px' }}>Create Doctor</button>
+        <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: '#fff', padding: '10px', border: 'none', borderRadius: '3px' }}>Add Doctor</button>
       </form>
       {message && <p>{message}</p>}
       {error && <p>Error: {error}</p>}
