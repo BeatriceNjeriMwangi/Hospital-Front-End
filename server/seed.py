@@ -2,7 +2,7 @@ from models import db, Doctor, Patient, Appointment, Treatment
 from app import app
 from datetime import datetime
 
-def seed_data(appointment_date, appointment_time):
+def seed_data():
     db.session.query(Doctor).delete()
     db.session.query(Patient).delete()
     db.session.query(Appointment).delete()
@@ -37,11 +37,12 @@ def seed_data(appointment_date, appointment_time):
     db.session.commit()  # Commit patients first to obtain their IDs
     
     # Create appointments
-
-    appointment1 = Appointment( patients_id=patient1.id, doctors_id=doctor1.id,appointment_date=appointment_date,appointment_time=appointment_time)
-    appointment2 = Appointment(patients_id=patient2.id, doctors_id=doctor2.id,appointment_date=appointment_date,appointment_time=appointment_time)
-    appointment3 = Appointment(patients_id=patient4.id, doctors_id=doctor4.id,appointment_date=appointment_date,appointment_time=appointment_time)
-    appointment4 = Appointment(patients_id=patient5.id, doctors_id=doctor3.id,appointment_date=appointment_date,appointment_time=appointment_time)
+    # appointment_date=datetime.strptime("02/02/2023", '%Y-%m-%d').date()
+    # appointment_time=datetime.strptime("12:30", '%H:%M').time()
+    appointment1 = Appointment( patients_id=patient1.id, doctors_id=doctor1.id,appointment_date="10/2/2023",appointment_time="08:30")
+    appointment2 = Appointment(patients_id=patient2.id, doctors_id=doctor2.id,appointment_date="10/2/2023",appointment_time="08:30")
+    appointment3 = Appointment(patients_id=patient4.id, doctors_id=doctor4.id,appointment_date="10/2/2023",appointment_time="08:30")
+    appointment4 = Appointment(patients_id=patient5.id, doctors_id=doctor3.id,appointment_date="10/2/2023",appointment_time="08:30")
 
     db.session.add(appointment1)
     db.session.add(appointment2)

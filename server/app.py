@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from flask_restful import Api,Resource
 from models import db,Doctor,Patient,Appointment,Treatment
 from flask_cors import CORS
+from datetime import datetime
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///hospital.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATION']=False
@@ -116,12 +117,27 @@ class Appointments(Resource):
             return{"message": "does not exist"}
         patients_id=data.get('patients_id')
         doctors_id=data.get('doctors_id')
-        appointment_date=data.get('appointment_date')
-        appointment_time=data.get('appointment_time')
-        appointment = Appointment(patient_id=patients_id,doctor_id=doctors_id,appointment_date=appointment_date,appointment_time=appointment_time)
+        # appointment_date=data.get('appointment_date')
+        appointment_date=datetime.strptime(data.get('appointment_date'), '%Y-%m-%d').date()
+        appointment_time=datetime.strptime(data.get('appointment_time'), '%H:%M').time()
+        # date=datetime.strptime(request.json['date'],'%Y-%m-%d').date()
+        # time=datetime.strptime(request.json['time'], '%H:%M').time()
+        # appointment_time=data.get('appointment_time')
+        appointment = Appointment(patients_id=patients_id,doctors_id=doctors_id,appointment_date=appointment_date,appointment_time=appointment_time)
         db.session.add(appointment)
         db.session.commit()
         return {"message": "appointment created"} 
+class AppointmentById(Resource):
+    def patch(self,id):
+        data=request.json
+        
+        new_appointment_date=data.get('new_appointment_date')
+        if new_appointment_date !=  '':
+            appointment=Appointment.query.filter_by(id=id).first()
+            appointment.appointment_date=new_appointment_date
+            db.session.add(appointment)
+            db.session.commit()
+            return {"message":"treatment updated successfully"}
 class Treatments(Resource):
     def get(self):
         treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"progress":treatment.progress}for treatment in Treatment.query.all()]
@@ -149,11 +165,7 @@ class TreatmentById(Resource):
                 "appointment_id": treatment.appointment_id,
                 "doctors_id": treatment.doctors_id,
                 "patients_id": treatment.patients_id,
-<<<<<<< HEAD
-                "progress": treatment.progress,
-=======
                 "progress": treatment.progress
->>>>>>> da9ef894 (edited some components)
 
             }
             return make_response(jsonify(treatment_data), 200)
@@ -182,6 +194,7 @@ api.add_resource(Patients,'/patients')
 api.add_resource(DoctorById,'/doctors/<int:id>')
 api.add_resource(PatientById,'/patients/<int:id>')
 api.add_resource(Appointments,'/appointments')
+api.add_resource(AppointmentById,'/appointments/<int:id>')
 api.add_resource(Treatments,'/treatments')
 api.add_resource(TreatmentById,'/treatments/<int:id>')
 if __name__ == '__main__':
