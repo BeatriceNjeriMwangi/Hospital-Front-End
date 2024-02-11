@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FormTreatment from '../components/FormTreatment';
+import FormTreatmentCreating from './FormTreatmentCreating';
 
 function Treatment() {
   const [treatments, setTreatments] = useState([]);
@@ -40,6 +41,7 @@ function Treatment() {
           ))}
         </tbody>
       </table>
+      <FormTreatmentCreating/>
       <FormTreatment/>
     </div>
   );

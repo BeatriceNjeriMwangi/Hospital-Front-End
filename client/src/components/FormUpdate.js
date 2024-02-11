@@ -14,6 +14,7 @@ function FormUpdate() {
 try {
   const response = await axios.patch(`/appointments/${id}`, {
     appointment_date: appointmentDate,
+    appointment_id:id,
   });
 
   if (response.status === 200) {

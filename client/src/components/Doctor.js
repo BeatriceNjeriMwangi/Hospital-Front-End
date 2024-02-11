@@ -35,7 +35,7 @@ function Doctor() {
           </tr>
         </thead>
         <tbody>
-          {doctors.map((doctor) => (
+          {doctors?.map((doctor) => (
             <tr key={doctor.id}>
               <td>{doctor.id}</td>
               <td>{doctor.fname}</td>
