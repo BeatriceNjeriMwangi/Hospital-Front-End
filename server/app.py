@@ -56,9 +56,6 @@ class DoctorById(Resource):
             db.session.commit()
             return {"message":"email updated successfully"},200
         
-
-        
-    
 class Patients(Resource):
     def get (self):
         patient=[{"id":patient.id, "fname":patient.fname, "lname":patient.lname,"password":patient.password,"email":patient.email,"phone_number":patient.phone_number,"regNo":patient.regNo,"gender":patient.gender} for patient in Patient.query.all()]
@@ -165,7 +162,11 @@ class TreatmentById(Resource):
                 "appointment_id": treatment.appointment_id,
                 "doctors_id": treatment.doctors_id,
                 "patients_id": treatment.patients_id,
+
+                "progress": treatment.progress,
+
                 "progress": treatment.progress
+
 
             }
             return make_response(jsonify(treatment_data), 200)
