@@ -55,7 +55,7 @@ function FormTreatmentCreating() {
             type="text"
             id="appointment_id"
             name="appointment_id"
-            value={formData.appointment_id}
+            value={formData.appointment_date}
             onChange={handleChange}
             required
           

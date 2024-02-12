@@ -13,6 +13,27 @@ function Doctor() {
     .then(data => setDoctors(data))
   }, []);
 
+  function handleDelete(id) {
+    fetch(`/doctors/${id}`, {
+      method: "DELETE",
+    })
+    .then((response) => {
+      if (response.ok  ) {
+        console.log("Doctor deleted successfully");
+        setDoctors(doctors.map(doctor => doctor.id !== id))
+        // Optionally, you can update the UI to reflect the deletion
+      } else {
+        console.error("Failed to delete doctor:", response.statusText);
+        // Handle the error condition, e.g., show an error message to the user
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting doctor:", error);
+      // Handle network errors or other unexpected errors
+    });
+  }
+  
+
   return (
     <div>
       <h1>Doctor's List</h1>
@@ -31,15 +52,17 @@ function Doctor() {
         </thead>
         <tbody>
           {doctors?.map((doctor) => (
-            <tr key={doctor.id}>
+            <><tr key={doctor.id}>
               <td>{doctor.id}</td>
               <td>{doctor.fname}</td>
               <td>{doctor.lname}</td>
               <td>{doctor.email}</td>
               <td>{doctor.phone_number}</td>
               <td>{doctor.regNo}</td>
-              <td>{doctor.gender}</td>
+              <td>{doctor.gender} </td>
+              <td><button onClick={() => handleDelete(doctor.id)}>Delete</button></td>
             </tr>
+            </>
           ))}
         </tbody>
       </table>
