@@ -1,45 +1,53 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 
 function FormPatient() {
-  const [fname,setFirstName ] = useState("")
-  const [lname,setLastName] = useState ("")
-  const [email,setLastEmail] = useState ("")
-  const [phone_number,setPhoneNumber] = useState ("")
-  const [gender,setGender] = useState ("")
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    password: '',
+    email: '',
+    phone_number: '',
+    regNo: '',
+    gender: '',
+  });
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  function handleSubmit(e) {
-    e.preventDefault();
-  
-    fetch('/patients', {
-      method: 'POST',
-      headers: {    // <-- Corrected field name
-        "Content-Type": "application/json"  // <-- Corrected Content-Type header
-      },
-      body: JSON.stringify({
-        fname,
-        lname,
-        email,
-        phone_number,
-        gender,
-      })
-    })
-    .then(response => {
-      if (response.ok) {
-        // Optionally handle success response here
-        console.log("Patient created successfully");
-      } else {
-        // Optionally handle error response here
-        console.error("Failed to create patient");
-      }
-    })
-    .catch(error => {
-      console.error('Error creating patient:', error);
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+try {
+  const response = await axios.post('/patients', formData);
+
+  if (response.status === 201) {
+    setMessage('Patient created successfully');
+    // Clear the form
+    setFormData({
+      fname: '',
+      lname: '',
+      password: '',
+      email: '',
+      phone_number: '',
+      regNo: '',
+      gender: '',
+    });
+  }
+} catch (err) {
+  if (err.response) {
+    setError(err.response.data.error);
+  } else {
+    setError('An error occurred while creating the patient.');
+  }
+}
+  };
+
   const formStyle = {
     maxWidth: '400px',
     margin: '0 auto',
@@ -94,8 +102,8 @@ function FormPatient() {
           <input
             type="text"
             name="fname"
-            value={fname}
-            onChange={(e) => setFirstName(e.target.value)}
+            value={formData.fname}
+            onChange={handleChange}
             style={inputStyle}
           />
         </div>
@@ -104,8 +112,18 @@ function FormPatient() {
           <input
             type="text"
             name="lname"
-            value={lname}
-            onChange={(e) => setLastName(e.target.value)}
+            value={formData.lname}
+            onChange={handleChange}
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label style={labelStyle}>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             style={inputStyle}
           />
         </div>
@@ -114,31 +132,54 @@ function FormPatient() {
           <input
             type="email"
             name="email"
-            value={email}
-            onChange={(e) => setLastEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             style={inputStyle}
           />
         </div>
         <div>
-          <label style={labelStyle}>Registration No:</label>
+          <label style={labelStyle}>Phone Number:</label>
           <input
             type="text"
             name="phone_number"
-            value={phone_number}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={formData.phone_number}
+            onChange={handleChange}
             style={inputStyle}
           />
         </div>
-
         <div>
+          <label style={labelStyle}>Registration Number:</label>
+          <input
+            type="text"
+            name="regNo"
+            value={formData.regNo}
+            onChange={handleChange}
+            style={inputStyle}
+          />
+        </div>
+        {/* <div>
           <label style={labelStyle}>Gender:</label>
           <input
             type="text"
             name="gender"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={formData.gender}
+            onChange={handleChange}
             style={inputStyle}
-          />
+          /> */}
+          <div className="form-group">
+          <label htmlFor="gender">Gender:</label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            style={inputStyle}
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+      
         </div>
         <button type="submit" style={buttonStyle}>Create Patient</button>
       </form>
@@ -149,3 +190,4 @@ function FormPatient() {
 }
 
 export default FormPatient;
+

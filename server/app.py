@@ -1,3 +1,4 @@
+
 from flask import Flask,jsonify,request,make_response
 from flask_migrate import Migrate
 from flask_restful import Api,Resource
@@ -11,6 +12,7 @@ CORS(app)
 migrate=Migrate(app,db)
 db.init_app(app)
 api=Api(app)
+
 #get list of all doctors
 class Doctors(Resource):
     def get (self):
@@ -27,7 +29,7 @@ class Doctors(Resource):
         password = data.get('password')
         phone_number = data.get('phone_number')
         regNo=data.get('regNo')
-        gender=data.get('gender')
+        gender=data.get('gender')   
 
         if not all([fname,lname, email, password, phone_number,regNo,gender]):
             return {"message": "Please provide all fields"}, 400
@@ -47,7 +49,7 @@ class DoctorById(Resource):
         return make_response(jsonify(response_dict),200)
     def patch(self,id):
         data =request.json
-        new_email=data.get('email')
+        new_email=data.get('doctors_email')
 
         if new_email != '':
             doctor = Doctor.query.filter_by(id=id).first()
@@ -55,7 +57,7 @@ class DoctorById(Resource):
             db.session.add(doctor)
             db.session.commit()
             return {"message":"email updated successfully"},200
-        
+    
 class Patients(Resource):
     def get (self):
         patient=[{"id":patient.id, "fname":patient.fname, "lname":patient.lname,"password":patient.password,"email":patient.email,"phone_number":patient.phone_number,"regNo":patient.regNo,"gender":patient.gender} for patient in Patient.query.all()]
@@ -76,7 +78,6 @@ class Patients(Resource):
         db.session.add(patient)
         db.session.commit()
         return {"message":"patient created successfully"}
-    
 class PatientById(Resource):
     def get(self, id):
         patient = Patient.query.filter_by(id=id).first()
@@ -96,24 +97,25 @@ class PatientById(Resource):
             return make_response(jsonify({"message": "Patient not found"}), 404)
     def patch(self,id):
         data=request.json
-        new_phone=data.get('phone')
+        new_phone=data.get('phone_number')
         if new_phone !=  '':
             patient=Patient.query.filter_by(id=id).first()
-            patient.phone=new_phone
+            patient.phone_number=new_phone
             db.session.add(patient)
             db.session.commit()
             return {"message":"patient updated successfully"}
-        
+
 class Appointments(Resource):
     def get(self):
-        appointment=[{"id":appointment.id, "appointment_date":appointment.appointment_date}for appointment in Appointment.query.all()]
+        appointment=[{"id":appointment.id,"patients_id":appointment.patients_id,"doctors_id":appointment.doctors_id,"appointment_date":str(appointment.appointment_date),"appointment_time":str(appointment.appointment_time)}for appointment in Appointment.query.all()]
         return  make_response(jsonify(appointment),200)
     def post(self):
         data = request.json
         if not data:
             return{"message": "does not exist"}
-        patients_id=data.get('patients_id')
         doctors_id=data.get('doctors_id')
+        patients_id=data.get('patients_id')
+
         # appointment_date=data.get('appointment_date')
         appointment_date=datetime.strptime(data.get('appointment_date'), '%Y-%m-%d').date()
         appointment_time=datetime.strptime(data.get('appointment_time'), '%H:%M').time()
@@ -127,14 +129,14 @@ class Appointments(Resource):
 class AppointmentById(Resource):
     def patch(self,id):
         data=request.json
-        
-        new_appointment_date=data.get('new_appointment_date')
+
+        new_appointment_date=datetime.strptime(data.get('appointment_date'), '%Y-%m-%d').date()
         if new_appointment_date !=  '':
             appointment=Appointment.query.filter_by(id=id).first()
             appointment.appointment_date=new_appointment_date
             db.session.add(appointment)
             db.session.commit()
-            return {"message":"treatment updated successfully"}
+            return {"message":"appointment updated successfully"}
 class Treatments(Resource):
     def get(self):
         treatment=[{"id":treatment.id,"appointment_id":treatment.appointment_id,"doctors_id":treatment.doctors_id,"patients_id":treatment.patients_id,"progress":treatment.progress}for treatment in Treatment.query.all()]
@@ -147,12 +149,12 @@ class Treatments(Resource):
         doctors_id=data.get('doctors_id')
         patients_id=data.get('patients_id')
         progress=data.get('progress')
-        
+
         treatment = Treatment(appointment_id=appointment_id,doctors_id=doctors_id,patients_id=patients_id,progress=progress)
         db.session.add(treatment)
         db.session.commit()
         return {"message": "appointment created"} 
-    
+
 class TreatmentById(Resource):
     def get(self,id):
         treatment = Treatment.query.filter_by(id=id).first()
@@ -163,18 +165,18 @@ class TreatmentById(Resource):
                 "doctors_id": treatment.doctors_id,
                 "patients_id": treatment.patients_id,
 
-                "progress": treatment.progress,
+            "progress": treatment.progress,
 
-                "progress": treatment.progress
+            "progress": treatment.progress
 
 
-            }
+        }
             return make_response(jsonify(treatment_data), 200)
         else:
             return make_response(jsonify({"message": "Treatment not found"}), 404)
     def patch(self,id):
         data=request.json
-        new_progress=data.get('new_progress')
+        new_progress=data.get('treatment_progress')
         if new_progress !=  '':
             treatment=Treatment.query.filter_by(id=id).first()
             treatment.progress=new_progress
@@ -189,7 +191,6 @@ class TreatmentById(Resource):
 
         return make_response(jsonify(response_dict),200)
         
-
 api.add_resource(Doctors,'/doctors')
 api.add_resource(Patients,'/patients')
 api.add_resource(DoctorById,'/doctors/<int:id>')
@@ -200,3 +201,4 @@ api.add_resource(Treatments,'/treatments')
 api.add_resource(TreatmentById,'/treatments/<int:id>')
 if __name__ == '__main__':
     app.run(port=5555,debug=True)
+

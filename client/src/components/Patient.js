@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import FormPatient from '../components/FormPatients';
+import FormUpdatePatient from './FormUpdatePatient';
 
 function Patient() {
   const [patients, setPatients] = useState([]);
+
 
   useEffect(() => {
     fetch( '/patients')
     .then(r => r.json())
     .then(data => setPatients(data))
   }, []);
+
+  
   return (
     <div>
       <h1>Patient List</h1>
@@ -20,18 +24,20 @@ function Patient() {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
+            <th>Phone Number</th>
             <th>Registration Number</th>
             <th>Gender</th>
           </tr>
         </thead>
         <tbody>
-          {patients.map((patient) => (
+          {patients?.map((patient) => (
             <tr key={patient.id}>
               <td>{patient.id}</td>
               <td>{patient.fname}</td>
               <td>{patient.lname}</td>
               <td>{patient.email}</td>
               <td>{patient.phone_number}</td>
+              <td>{patient.regNo}</td>
               <td>{patient.gender}</td>
             </tr>
           ))}
@@ -39,6 +45,7 @@ function Patient() {
       </table>
 
   <FormPatient/>
+  <FormUpdatePatient/>
 </div>
   );
 }

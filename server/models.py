@@ -20,16 +20,15 @@ class Doctor(db.Model,SerializerMixin):
     regNo=db.Column(db.Integer)
     gender=db.Column(db.String)
 
-    patient=db.relationship("Patient",secondary="appointments",backref="doctors",viewonly=True)
-    appointment=db.relationship("Appointment",backref="doctors")
-    treatment=db.relationship("Treatment",backref="doctors")
+patient=db.relationship("Patient",secondary="appointments",backref="doctors",viewonly=True)
+appointment=db.relationship("Appointment",backref="doctors")
+treatment=db.relationship("Treatment",backref="doctors")
 
-    @validates('email')
-    def validates_email(self,key,email):
-        if '@' not in email:
-            raise ValueError("email must have an '@")
-        return email
-
+@validates('email')
+def validates_email(self,key,email):
+    if '@' not in email:
+        raise ValueError("email must have an '@")
+    return email
 class Patient(db.Model,SerializerMixin):
     __tablename__ = 'patients'
     id = db.Column(db.Integer, primary_key=True)
@@ -43,14 +42,14 @@ class Patient(db.Model,SerializerMixin):
    
    
 
-    appointment=db.relationship("Appointment",backref="patients")
-    treatment=db.relationship("Treatment",backref="patients")
+appointment=db.relationship("Appointment",backref="patients")
+treatment=db.relationship("Treatment",backref="patients")
 
-    @validates('gender')
-    def validates_gender(self,key,gender):
-        if not gender:
-            raise ValueError('patient must specify the gender ')
-        return gender
+@validates('gender')
+def validates_gender(self,key,gender):
+    if not gender:
+        raise ValueError('patient must specify the gender ')
+    return gender
 class Appointment(db.Model,SerializerMixin):
     __tablename__ = 'appointments'
     id = db.Column(db.Integer, primary_key=True)
@@ -61,9 +60,7 @@ class Appointment(db.Model,SerializerMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,onupdate=datetime.utcnow)
 
-    treatment=db.relationship("Treatment",backref="appointments")
-
-
+treatment=db.relationship("Treatment",backref="appointments")
 class Treatment(db.Model,SerializerMixin):
     __tablename__ = 'treatments'
     id = db.Column(db.Integer,primary_key=True)
@@ -71,4 +68,3 @@ class Treatment(db.Model,SerializerMixin):
     doctors_id = db.Column(db.Integer,db.ForeignKey("doctors.id"))
     patients_id=db.Column(db.Integer, db.ForeignKey("patients.id"))
     progress = db.Column(db.String)
-  

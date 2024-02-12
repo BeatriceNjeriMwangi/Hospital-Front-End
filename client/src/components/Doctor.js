@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import FormDoctor from '../components/FormDoctor';
+import FormUpdateDoctor from './FormUpdateDoctor';
 
 function Doctor() {
   const [doctors, setDoctors] = useState([]);
@@ -44,6 +45,7 @@ function Doctor() {
       </table>
 
       <FormDoctor/>
+      <FormUpdateDoctor/>
     </div>
   );
 }

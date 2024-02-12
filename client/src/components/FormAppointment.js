@@ -15,7 +15,7 @@ function FormAppointment() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value ,});
   };
 
   const handleSubmit = async (e) => {
