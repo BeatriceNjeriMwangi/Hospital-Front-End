@@ -107,7 +107,7 @@ class PatientById(Resource):
 
 class Appointments(Resource):
     def get(self):
-        appointment=[{"id":appointment.id}for appointment in Appointment.query.all()]
+        appointment=[{"id":appointment.id,"patients_id":appointment.patients_id,"doctors_id":appointment.doctors_id,"appointment_date":str(appointment.appointment_date),"appointment_time":str(appointment.appointment_time)}for appointment in Appointment.query.all()]
         return  make_response(jsonify(appointment),200)
     def post(self):
         data = request.json
@@ -176,7 +176,7 @@ class TreatmentById(Resource):
             return make_response(jsonify({"message": "Treatment not found"}), 404)
     def patch(self,id):
         data=request.json
-        new_progress=data.get('treatment_progress')
+        new_progress=data.get('new_progress')
         if new_progress !=  '':
             treatment=Treatment.query.filter_by(id=id).first()
             treatment.progress=new_progress
