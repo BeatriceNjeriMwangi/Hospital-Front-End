@@ -26,7 +26,10 @@ function FormTreatment() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch('/update_treatment_progress', formData);
+  const response = await axios.patch(`/treatments/${id}`,{
+    new_progress:progress,
+    treatment_id:id,
+  });
 
   if (response.status === 200) {
     // Display a SweetAlert success notification

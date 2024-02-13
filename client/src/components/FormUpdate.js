@@ -57,7 +57,7 @@ try {
             onChange={(e) => setAppointmentDate(e.target.value)}
           />
         </div>
-        <button type="submit">Update Appointment Date</button>
+        <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: '#fff', padding: '10px', border: 'none', borderRadius: '3px' }}>Update Appointment Date</button>
       </form>
       {error && <p>Error: {error}</p>}
     </div>

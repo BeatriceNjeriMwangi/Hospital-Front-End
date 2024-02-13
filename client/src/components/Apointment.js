@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormUpdate from '../components/FormUpdate';
+import FormAppointment from './FormAppointment';
 
 function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
@@ -18,30 +19,28 @@ function AppointmentList() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Doctor Registration No</th>
-            <th>Patient Registration No</th>
+            <th>Patient Id</th>
+            <th>Doctor Id</th>
             <th>Appointment Date</th>
             <th>Appointment Time</th>
-            <th>Created at</th>
-            <th>Updated at</th>
+            
           </tr>
         </thead>
         <tbody>
           {appointments.map((appointment) => (
             <tr key={appointment.id}>
               <td>{appointment.id}</td>
-              <td>{appointment.doctor_regNo}</td>
-              <td>{appointment.patient_regNo}</td>
+              <td>{appointment.doctors_id}</td>
+              <td>{appointment.patients_id}</td>
               <td>{appointment.appointment_date}</td>
               <td>{appointment.appointment_time}</td>
-              <td>{appointment.created_at}</td>
-              <td>{appointment.updated_at}</td>
+             
 
             </tr>
           ))}
         </tbody>
       </table>
-
+      <FormAppointment/>      
       <FormUpdate/>
     </div>
   );

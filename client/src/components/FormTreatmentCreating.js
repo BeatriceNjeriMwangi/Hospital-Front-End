@@ -3,10 +3,10 @@ import axios from 'axios';
 
 function FormTreatmentCreating() {
   const [formData, setFormData] = useState({
+    appointment_id:'',
     patients_id: '',
     doctors_id: '',
-    appointment_date: '',
-    appointment_time: '',
+    progress:'',
     
   });
 
@@ -24,7 +24,7 @@ function FormTreatmentCreating() {
     try {
       const response = await axios.post('/treatments', formData);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setMessage('Treatment created successfully');
         // Clear the form
         setFormData({
