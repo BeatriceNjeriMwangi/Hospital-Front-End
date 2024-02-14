@@ -7,7 +7,7 @@ function AppointmentList() {
 
  
   useEffect(() => {
-    fetch( '/appointments')
+    fetch( 'https://hospital-420l.onrender.com/appointments')
     .then(r => r.json())
     .then(data => setAppointments(data))
   }, []);

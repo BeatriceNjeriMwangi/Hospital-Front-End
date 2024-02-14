@@ -19,7 +19,7 @@ function FormDoctor() {
   function handleSubmit(e) {
     e.preventDefault();
   
-    fetch('/doctors', {
+    fetch('https://hospital-420l.onrender.com/doctors', {
       method: 'POST',
       headers: {    // <-- Corrected field name
         "Content-Type": "application/json"  // <-- Corrected Content-Type header

@@ -22,7 +22,7 @@ function FormTreatmentCreating() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/treatments', formData);
+      const response = await axios.post('https://hospital-420l.onrender.com/treatments', formData);
 
       if (response.status === 200) {
         setMessage('Treatment created successfully');

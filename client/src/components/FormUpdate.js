@@ -12,7 +12,7 @@ function FormUpdate() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch(`/appointments/${id}`, {
+  const response = await axios.patch(`https://hospital-420l.onrender.com/appointments/${id}`, {
     appointment_date: appointmentDate,
     appointment_id:id,
   });

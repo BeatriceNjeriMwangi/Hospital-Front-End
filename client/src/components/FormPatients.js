@@ -24,7 +24,7 @@ function FormPatient() {
     e.preventDefault();
 
 try {
-  const response = await axios.post('/patients', formData);
+  const response = await axios.post('https://hospital-420l.onrender.com/patients', formData);
 
   if (response.status === 201) {
     setMessage('Patient created successfully');

@@ -7,7 +7,7 @@ function Treatment() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch( '/treatments')
+    fetch( 'https://hospital-420l.onrender.com/treatments')
     .then(r => r.json())
     .then(data => setTreatments(data))
   }, []);

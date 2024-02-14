@@ -7,7 +7,7 @@ function Patient() {
 
 
   useEffect(() => {
-    fetch( '/patients')
+    fetch( 'https://hospital-420l.onrender.com/patients')
     .then(r => r.json())
     .then(data => setPatients(data))
   }, []);

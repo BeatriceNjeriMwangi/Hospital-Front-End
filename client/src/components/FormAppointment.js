@@ -182,7 +182,7 @@ function FormAppointment(){
     e.preventDefault();
 
     try{
-      const response=await axios.post('/appointments',formData);
+      const response=await axios.post('https://hospital-420l.onrender.com/appointments',formData);
       
       if(response.status===200){
         setMessage('Appointment created successfully');

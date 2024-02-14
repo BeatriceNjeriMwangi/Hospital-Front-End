@@ -13,7 +13,7 @@ function FormUpdateDoctor() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch(`/doctors/${id}`, {
+  const response = await axios.patch(`https://hospital-420l.onrender.com/doctors/${id}`, {
     doctors_email: email,
     doctors_id:id,
   });

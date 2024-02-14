@@ -26,7 +26,7 @@ function FormTreatment() {
     e.preventDefault();
 
 try {
-  const response = await axios.patch(`/treatments/${id}`,{
+  const response = await axios.patch(`https://hospital-420l.onrender.com/treatments/${id}`,{
     new_progress:progress,
     treatment_id:id,
   });
