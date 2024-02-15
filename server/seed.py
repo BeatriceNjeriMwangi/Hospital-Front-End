@@ -39,10 +39,14 @@ def seed_data():
     # Create appointments
     # appointment_date=datetime.strptime("02/02/2023", '%Y-%m-%d').date()
     # appointment_time=datetime.strptime("12:30", '%H:%M').time()
-    appointment1 = Appointment( patients_id=patient1.id, doctors_id=doctor1.id,appointment_date="10/2/2023",appointment_time="08:30")
-    appointment2 = Appointment(patients_id=patient2.id, doctors_id=doctor2.id,appointment_date="10/2/2023",appointment_time="08:30")
-    appointment3 = Appointment(patients_id=patient4.id, doctors_id=doctor4.id,appointment_date="10/2/2023",appointment_time="08:30")
-    appointment4 = Appointment(patients_id=patient5.id, doctors_id=doctor3.id,appointment_date="10/2/2023",appointment_time="08:30")
+    appointment1 = Appointment( patients_id=patient1.id, doctors_id=doctor1.id,appointment_date=datetime.now().date(),appointment_time=datetime.now().time()
+)
+    appointment2 = Appointment(patients_id=patient2.id, doctors_id=doctor2.id,appointment_date=datetime.now().date(),appointment_time=datetime.now().time()
+)
+    appointment3 = Appointment(patients_id=patient4.id, doctors_id=doctor4.id,appointment_date=datetime.now().date(),appointment_time=datetime.now().time()
+)
+    appointment4 = Appointment(patients_id=patient5.id, doctors_id=doctor3.id,appointment_date=datetime.now().date(),appointment_time=datetime.now().time()
+)
 
     db.session.add(appointment1)
     db.session.add(appointment2)
