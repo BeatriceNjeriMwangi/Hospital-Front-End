@@ -14,14 +14,13 @@ function Doctor() {
   }, []);
 
   function handleDelete(id) {
-    fetch(`/doctors/${id}`, {
+    fetch(`https://hospital-420l.onrender.com/doctors/${id}`, {
       method: "DELETE",
     })
     .then((response) => {
       if (response.ok  ) {
         console.log("Doctor deleted successfully");
-        setDoctors(doctors.map(doctor => doctor.id !== id))
-        // Optionally, you can update the UI to reflect the deletion
+        setDoctors((doctors) => doctors.filter((doctor) => doctor.id !==id))       // Optionally, you can update the UI to reflect the deletion
       } else {
         console.error("Failed to delete doctor:", response.statusText);
         // Handle the error condition, e.g., show an error message to the user
